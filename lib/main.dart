@@ -4,6 +4,8 @@ void main() {
   runApp(Fascia());
 }
 
+GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+
 class Fascia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,21 @@ class Fascia extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
+        key: _drawerKey,
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text("Projects")
+              ),
+              ListTile(
+                leading: Icon(Icons.account_circle),
+                title: Text("Login")
+              )
+            ],
+          )
+        ),
           appBar: Header(),
           body: ListView(
               children: listTiles
@@ -121,7 +138,12 @@ class Header extends StatelessWidget with PreferredSizeWidget{
     return AppBar(
       leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Icon(Icons.add)
+          child: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => {
+              _drawerKey.currentState.openDrawer()
+            },
+          )
       ),
       title: Text("Home"),
       centerTitle: true,
